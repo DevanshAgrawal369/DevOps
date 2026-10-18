@@ -1,0 +1,55 @@
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: flashsale-rs
+  labels:
+    app: flashsale
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flashsale
+  template:
+    metadata:
+      labels:
+        app: flashsale
+    spec:
+      containers:
+        - name: flashsale-container
+          image: devanshbansal21/flashsale:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flashsale-svc
+spec:
+  selector:
+    app: flashsale
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
