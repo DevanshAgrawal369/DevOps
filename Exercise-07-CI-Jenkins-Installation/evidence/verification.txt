@@ -1,0 +1,34 @@
+﻿Exercise 7 environment verification
+Date: 2026-10-20
+Host OS/shell: Windows PowerShell; Docker Engine runs through Docker Desktop Linux context.
+Repository status at initial inspection: main...origin/main, clean.
+--- Docker client/server and context ---
+Client=29.5.2 Server=29.5.2
+desktop-linux
+--- Container inventory (actual output) ---
+NAMES                                                                     IMAGE                                 STATUS                    PORTS
+exercise-06-real-time-operations-monitoring-alerting-delivery_service-1   exercise6-delivery-metrics:local      Up 20 minutes (healthy)   127.0.0.1:8000->8000/tcp
+exercise-06-real-time-operations-monitoring-alerting-grafana-1            grafana/grafana:12.1.1                Up 30 minutes (healthy)   127.0.0.1:3000->3000/tcp
+exercise-06-real-time-operations-monitoring-alerting-prometheus-1         prom/prometheus:v3.5.0                Up 30 minutes (healthy)   127.0.0.1:9090->9090/tcp
+flask                                                                     flask-api                             Up About an hour          0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp
+redis                                                                     redis:latest                          Up 2 hours                6379/tcp
+mysql                                                                     mysql:latest                          Up 2 hours                3306/tcp, 33060/tcp
+minikube                                                                  gcr.io/k8s-minikube/kicbase:v0.0.51   Up 2 days                 127.0.0.1:59968->22/tcp, 127.0.0.1:59966->2376/tcp, 127.0.0.1:59969->5000/tcp, 127.0.0.1:59965->8443/tcp, 127.0.0.1:59967->32443/tcp
+smart-hms-postgres-1                                                      postgres:15-alpine                    Exited (255) 2 days ago   0.0.0.0:5432->5432/tcp
+smart-hms-redis-1                                                         redis:7-alpine                        Exited (255) 2 days ago   0.0.0.0:6379->6379/tcp
+--- Jenkins-name container filter ---
+(no matching containers)
+--- Compose projects (actual output) ---
+NAME                                                   STATUS              CONFIG FILES
+exercise-06-real-time-operations-monitoring-alerting   running(3)          C:\Users\devan\DevOps\Exercise-06-Real-Time-Operations-Monitoring-Alerting\docker-compose.yml
+--- Relevant listening sockets (actual output) ---
+127.0.0.1:8000 PID=14916 Process=com.docker.backend
+::1:8080 PID=40048 Process=kubectl
+127.0.0.1:8080 PID=40048 Process=kubectl
+--- Jenkins/Java host process query ---
+(no Jenkins or Java process found)
+--- HTTP probes (body omitted) ---
+http://localhost:8080/login => HTTP 404
+http://localhost:8081/login => unavailable (WebException)
+--- Interpretation and limits ---
+8080 is owned by kubectl.exe PID 40048 and returns HTTP 404; it is the existing Minikube port-forward, not Jenkins. 8081 has no listener. No Jenkins container or host process exists. No Jenkins UI/version/setup state can be verified. Existing services were not modified. No password or credential was retrieved. No replacement instance/volume was created because Jenkins is unavailable and startup could interfere with existing user state. Screenshots are blocked; see screenshot-checklist.md.

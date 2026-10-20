@@ -54,7 +54,7 @@ DevOps/
 
 ├── Exercise-06-Real-Time-Operations-Monitoring-Alerting/
 
-├── Exercise-07-Containerized-Application/
+├── Exercise-07-CI-Jenkins-Installation/
 
 ├── Exercise-08-Docker-Kubernetes-Integration/
 

@@ -1,0 +1,1 @@
+No screenshots are included because the inspected machine has no accessible Jenkins instance. See `../screenshot-checklist.md` for the actual checks and the exact captures needed once Jenkins is available. Do not replace these with screenshots of another service.
