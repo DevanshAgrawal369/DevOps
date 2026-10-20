@@ -1,0 +1,53 @@
+Exercise 9 verification record
+Date: 2026-10-20 (Asia/Calcutta)
+
+SOURCE REPOSITORY
+URL: https://github.com/DevanshAgrawal369/devops-sample-code
+Latest source commit: b36bc1a00816ad97357244ec822e8d4735be0cd5
+Changes were pushed to the existing public main branch. Existing hello-world.sh remains in the repository. The separate local checkout is clean and tracks origin/main.
+
+JENKINS ENVIRONMENT
+Container: devops-exercise7-jenkins
+Image: jenkins/jenkins:lts-jdk21
+State: running; host 127.0.0.1:8081 forwards to container port 8080.
+HTTP: GET /login returned HTTP 200. Jenkins-Version response header: 2.580.1.
+Controller OS: Linux x86_64 on Docker Desktop's WSL2 kernel.
+Jenkins account directory: admin (password/hash not read or recorded).
+Administrator authentication remains unresolved. The Python-MultiStage-Pipeline job has NOT been configured; no Jenkins pipeline build has successfully executed.
+Pipeline plugins: workflow-aggregator, workflow-cps, workflow-job present.
+Git plugins: git and git-client present.
+Python: python3 was not found in the controller PATH. pip/venv unavailable.
+Docker: Docker CLI absent in controller; /var/run/docker.sock absent. No socket or privileged access was added.
+Storage: existing Jenkins home volume preserved.
+Anonymous identity check: GET /whoAmI/api/json returned HTTP 200 and identity name "anonymous".
+Authenticated API check: using the existing initialAdminPassword file returned HTTP 403. A local login-form attempt redirected (HTTP 302), but the subsequent identity check still reported anonymous. The file exists but did not establish an authenticated session; it is not a current password-recovery mechanism.
+Existing HelloWorld job: preserved; current authenticated verification was unavailable.
+Exercise 9 Jenkins job: NOT created or modified.
+Pipeline build number/result: NOT RUN / unavailable.
+Jenkins Declarative linter: NOT run because authenticated Jenkins API access is unavailable.
+
+SOURCE AND TEST CHECKS
+The project was committed and pushed in two commits; latest: b36bc1a00816ad97357244ec822e8d4735be0cd5.
+The Jenkinsfile uses checksum-pinned uv 0.8.22, installs Python 3.12.10 into the Jenkins user's tool cache, and creates its own workspace virtual environment. The controller image is not modified. Pipeline execution of these steps has not been proven.
+A separate ephemeral Docker test container used image python:3.12.12-slim-bookworm; the project checkout was mounted read-only and the process ran as UID/GID 10001.
+Pinned dependencies installed successfully: Flask 3.1.2, Werkzeug 3.1.9, Flake8 7.3.0.
+Unit tests: Ran 2 tests; OK. Test cases checked HTTP 200 and the exact response body.
+Flake8: version 7.3.0; app.py and test_app.py passed with no diagnostics.
+
+LOCAL APP SMOKE CHECK (NOT A JENKINS BUILD)
+A temporary container named exercise9-flask-smoke ran the published Flask app with host mapping 127.0.0.1:51809 to container port 5000.
+Browser request: http://127.0.0.1:51809/ returned HTTP 200.
+Response body: Hello, Jenkins Multi-Stage Pipeline!
+Screenshot: evidence/screenshots/07-flask-response.png (opened and visually inspected). This proves the local Docker smoke endpoint only; it does not prove Jenkins deployment or pipeline cleanup.
+Cleanup: the specifically named container was stopped; --rm removed it. A subsequent check found no listener on host port 51809.
+
+CAPTURED SCREENSHOTS
+01-github-repository.png — captured from the public GitHub repository, HTTP 200; visually inspected.
+02-flask-source.png — captured from the published app.py page, HTTP 200; visually inspected.
+03-jenkinsfile-stages.png — captured from the published Jenkinsfile page, HTTP 200; visually inspected.
+07-flask-response.png — captured from the live local smoke app, HTTP 200; visually inspected. Not Jenkins deployed-app evidence.
+
+BLOCKER / REMAINING ACTION
+Authenticated access to the existing Jenkins at http://localhost:8081 is required. The unlock password file is not accepted and was not used to reset or bypass the account. Restore access using the supported recovery procedure for this exact Jenkins installation or provide an authorized active Jenkins session. Preserve the existing container and volume. Then configure Python-MultiStage-Pipeline from SCM, run it, verify every stage and actual console output, confirm server cleanup, and capture the missing Jenkins screenshots. Do not claim completion before that successful build.
+
+No password, token, cookie, hash, or secret is recorded in this file.

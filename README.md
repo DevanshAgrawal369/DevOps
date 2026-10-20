@@ -26,7 +26,7 @@ A practical collection of DevOps lab exercises covering application development,
 
 8\. Creating a Hello World Jenkins Job
 
-9\. Deploy and Manage an Application Using Kubernetes
+9\. Jenkins Multi-Stage Pipeline for a Python Flask Application
 
 10\. Automated Testing Using Selenium
 
@@ -58,7 +58,7 @@ DevOps/
 
 ├── Exercise-08-Jenkins-Hello-World/
 
-├── Exercise-09-Kubernetes-Deployment/
+├── Exercise-09-Jenkins-Multistage-Pipeline/
 
 └── Exercise-10-Selenium-Automation/
 
@@ -330,30 +330,27 @@ Directory: `Exercise-03-Flash-Sale-ReplicaSet/`
 
 
 
-\## Exercise 9: Deploy and Manage an Application Using Kubernetes
+\## Exercise 9: Jenkins Multi-Stage Pipeline for a Python Flask Application
 
+\*\*Objective:\*\* Build, test, lint, deploy, and verify a Flask application through a Jenkins Declarative Pipeline.
 
+\*\*Pipeline stages:\*\*
 
-\*\*Objective:\*\* Automate the deployment and management of a containerized application with Kubernetes.
+\- Create a Python virtual environment and install pinned dependencies.
 
+\- Run Flask unit tests and Flake8 code-quality checks.
 
+\- Copy the application into a workspace deployment directory.
 
-\*\*Planned activities:\*\*
+\- Start the deployed application on a checked local port and verify its HTTP response.
 
-\- Define application deployment resources.
+\- Stop the build-owned application process during pipeline cleanup.
 
-\- Configure replica counts and Services.
+\*\*Source repository:\*\* `https://github.com/DevanshAgrawal369/devops-sample-code`
 
-\- Apply and update Kubernetes configurations.
+\*\*Verification status:\*\* Unit tests, lint, and a local Docker smoke check passed independently of Jenkins. Administrator authentication remains unresolved; the Jenkins pipeline job has NOT been configured or successfully executed. See `Exercise-09-Jenkins-Multistage-Pipeline/evidence/verification.txt`.
 
-\- Verify rollout status and Pod health.
-
-\- Inspect application logs and resource state.
-
-
-
-\*\*Key learning outcomes:\*\* Declarative configuration, Deployments, scaling, rollouts, and workload management.
-
+\*\*Key learning outcomes:\*\* Declarative pipelines, build stages, automated testing, linting, workspace deployment, live HTTP verification, and safe process cleanup.
 
 
 \## Exercise 10: Automated Testing Using Selenium
