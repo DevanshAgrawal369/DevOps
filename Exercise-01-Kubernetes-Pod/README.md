@@ -96,3 +96,7 @@ minikube stop
 - Practiced deploying resources using YAML manifests.
 - Verified application availability using kubectl and Minikube.
 - Used Git to prepare a project for GitHub.
+
+## Current evidence
+
+The current Minikube `hello-k8s` workload was rechecked on 2026-10-20 and its rendered Nginx page returned HTTP 200. See [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) and [the live capture](evidence/screenshots/01-nginx-live.png). Existing Minikube resources were preserved.

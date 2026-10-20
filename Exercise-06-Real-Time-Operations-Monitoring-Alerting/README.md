@@ -154,11 +154,11 @@ Grafana automatically provisions a Prometheus data source at `http://prometheus:
 3. On-the-Way Deliveries — `on_the_way_deliveries`
 4. Average Delivery Time — `average_delivery_time_sum / clamp_min(average_delivery_time_count, 1)`
 
-The data source and dashboard can be checked in Grafana's HTTP API; the API check is included in `py stack_checks.py verify`. Dashboard JSON is parsed in the unit/structural tests. This run verified the provisioned datasource and dashboard through Grafana's API; a GUI screenshot was not captured.
+The data source and dashboard can be checked in Grafana's HTTP API; the API check is included in `py stack_checks.py verify`. Dashboard JSON is parsed in the unit/structural tests. The provisioned data source and dashboard were also verified in rendered browser pages. See [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) and the nine inspected screenshots under [`evidence/screenshots/`](evidence/screenshots/).
 
 ## Jenkins pipeline
 
-The existing machine has no Jenkins Windows service, Jenkins process, or Jenkins container, so no Jenkins server or job was created or modified. The pipeline is configured in `Jenkinsfile` and must be run by a Linux agent; its `sh` steps do not assume PowerShell exists inside a Jenkins container.
+This environment now has a separate local Jenkins container for Exercise 7 at `http://localhost:8081`. The Exercise 6 pipeline was not run as a Jenkins job; it remains a configured pipeline definition and still requires a job and agent with appropriate tools.
 
 To use it when Jenkins is available:
 
@@ -188,7 +188,8 @@ This repository contains a pipeline definition but no real Jenkins build result;
 - Metrics endpoint: **HTTP 200** with all five expected series, including Summary `_sum` and `_count`.
 - Prometheus: readiness and health **HTTP 200**; delivery and self-scrape targets **UP**; config and both alert rules passed `promtool` checks.
 - Grafana: health **HTTP 200**; Prometheus data source and named dashboard both found by API.
-- Alerts: both pending and average-time alerts were observed as `pending` and then `firing` through Prometheus's alerts API. After disabling pending mode and restarting the delivery service to clear synthetic Summary observations, both returned to inactive and normal metric values were verified.
-- Jenkins: **not executed** because no Jenkins instance is installed/running. The pipeline is present and statically reviewed; execution requires a Jenkins server and compatible agent.
+- Alerts: on 2026-10-20, the controlled pending-delivery test observed `pending_deliveries=12`, then `HighPendingDeliveries` transitioned `inactive → pending → firing` through Prometheus. `SIGUSR2` restored normal mode; the rule returned to inactive. Browser captures show inactive, pending, firing, and resolved states. The high-average alert was not re-tested during this visual-verification run.
+- Browser verification: the metrics endpoint, Prometheus query, both-UP targets page, alerts, provisioned Grafana data source, and rendered four-panel dashboard were captured from the live local services and visually inspected. See [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md).
+- Jenkins: Jenkins 2.580.1 runs separately on loopback port 8081; setup, dashboard, and version page were reached and visually verified for Exercise 7. No Exercise 6 pipeline job or build was run.
 
-See the seven `evidence/` text files for actual outputs and timestamps. All services in this exercise remain running after verification; existing containers and volumes were preserved.
+See the `evidence/` text files and screenshot checklist for command, API, and browser results and timestamps. The three Exercise 6 services remain running; existing containers and volumes were preserved.

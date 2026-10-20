@@ -3,3 +3,8 @@ flask      flask-api                             Up About a minute   0.0.0.0:500
 redis      redis:latest                          Up 2 minutes        6379/tcp
 mysql      mysql:latest                          Up 3 minutes        3306/tcp, 33060/tcp
 minikube   gcr.io/k8s-minikube/kicbase:v0.0.51   Up 46 hours         127.0.0.1:59968->22/tcp, 127.0.0.1:59966->2376/tcp, 127.0.0.1:59969->5000/tcp, 127.0.0.1:59965->8443/tcp, 127.0.0.1:59967->32443/tcp
+Live Exercise 4 verification, 2026-10-20: `http://localhost:5001/about` returned HTTP 200 with the expected Simple REST API JSON. Screenshot: evidence/screenshots/01-api-live.png. Read-only Docker inspection showed flask, redis, and mysql attached to `my-bridge-net`.
+Docker DNS test from the running Flask container (2026-10-20):
+PASS redis resolves to 172.19.0.3 on my-bridge-net.
+PASS mysql resolves to 172.19.0.2 on my-bridge-net.
+These checks prove name resolution only; the Flask `/about` route does not execute database or cache operations.

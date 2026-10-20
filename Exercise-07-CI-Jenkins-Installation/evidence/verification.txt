@@ -32,3 +32,13 @@ http://localhost:8080/login => HTTP 404
 http://localhost:8081/login => unavailable (WebException)
 --- Interpretation and limits ---
 8080 is owned by kubectl.exe PID 40048 and returns HTTP 404; it is the existing Minikube port-forward, not Jenkins. 8081 has no listener. No Jenkins container or host process exists. No Jenkins UI/version/setup state can be verified. Existing services were not modified. No password or credential was retrieved. No replacement instance/volume was created because Jenkins is unavailable and startup could interfere with existing user state. Screenshots are blocked; see screenshot-checklist.md.
+Follow-up live Jenkins verification (2026-10-20; supersedes the initial absence findings below):
+Docker image: jenkins/jenkins:lts-jdk21
+Container: devops-exercise7-jenkins, running; host mapping 127.0.0.1:8081 -> container 8080.
+Persistent storage: newly created named volume devops-exercise7-jenkins-home. No pre-existing volumes or containers were removed.
+Existing port 8080 owner remained kubectl.exe Minikube port-forward PID 40048; it was not stopped or changed.
+Jenkins version from the running container: 2.580.1.
+HTTP: http://localhost:8081/login responded successfully; browser wizard installed suggested plugins, continued as built-in admin, configured http://localhost:8081/, and reached the dashboard.
+Screenshots captured and visually inspected: 01 unlock, 02 plugin selection, 03 plugin progress, 04 administrator choice, 05 instance URL, 07 dashboard, 08 version. No secret was saved or shown. The ready screen and terminal screenshot are missing; see evidence/screenshot-checklist.md.
+No Jenkins job was created. Existing Exercise 6 services remain running.
+Authenticated browser dashboard verification returned HTTP 200 and displayed Jenkins UI. The standalone unauthenticated request to `/` returned HTTP 403 due to Jenkins authorization; `/login` returned HTTP 200. Use an authorized Jenkins login when opening the instance outside the captured authenticated browser session.

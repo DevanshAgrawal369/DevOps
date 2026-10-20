@@ -8,3 +8,5 @@ Jenkins survey: no Windows Jenkins service, Jenkins process, or Jenkins containe
 Existing Docker inventory observed and preserved: flask, redis, mysql, minikube, smart-hms-postgres-1, smart-hms-redis-1. No existing containers or volumes were removed or modified.
 For local Grafana, a random local-only password was written to this exercise's ignored .env file. The password was not printed or recorded in evidence.
 After startup, this exercise uses loopback host bindings 127.0.0.1:8000, :9090, and :3000 and its own Compose network and named volumes.
+
+Follow-up screenshot verification (2026-10-20): Jenkins was absent, and port 8081 was free, so a distinct Jenkins 2.580.1 container was started on 127.0.0.1:8081 with named volume devops-exercise7-jenkins-home for Exercise 7. Existing Minikube port-forward 8080 and the Exercise 6 services were preserved. Setup completed in the local browser; see Exercise-07-CI-Jenkins-Installation/evidence/verification.txt. No Jenkins credentials are recorded here.

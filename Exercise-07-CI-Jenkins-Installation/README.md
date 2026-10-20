@@ -81,7 +81,7 @@ The official Jenkins image and an explicitly chosen LTS/JDK tag are used. Keep t
 The setup wizard may request an initial unlock password. Retrieve it only when the selected container is genuinely at that stage, using a private interactive PowerShell session:
 
 ```powershell
-docker exec -it jenkins-exercise7 cat /var/jenkins_home/secrets/initialAdminPassword
+docker exec -it devops-exercise7-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
 Enter the displayed value only into that Jenkins setup page. Do not put it in a command transcript, screenshot, evidence file, chat, or Git. If an established Jenkins account already exists, sign in with that account instead; do not reset it for this exercise.
@@ -102,9 +102,9 @@ An HTTP response alone proves only that a web server responded. Check the contai
 
 ## Verification in this environment
 
-Inspection was performed from Windows PowerShell on 2026-10-20. Docker Desktop's Linux engine answered successfully (Docker client/server 29.5.2, context `desktop-linux`). No container matching Jenkins was present in `docker ps -a`, and no Jenkins or Java process was found on the Windows host. Port 8080 was listening under `kubectl.exe`; `http://localhost:8080/login` returned HTTP 404, so that endpoint is the existing Minikube port-forward and is not a Jenkins interface. Port 8081 was not reachable. No Jenkins version, setup page, or dashboard could therefore be verified.
+Verification was performed from Windows PowerShell on 2026-10-20. Docker Desktop's Linux engine is on context `desktop-linux` (client/server 29.5.2). Port 8080 belongs to the existing `kubectl.exe` Minikube port-forward and was left untouched. With no existing Jenkins installation and host port 8081 free, a separate `jenkins/jenkins:lts-jdk21` container was started at `127.0.0.1:8081`, using the persistent volume `devops-exercise7-jenkins-home`. The container reports Jenkins version 2.580.1 and `/login` responds successfully. The browser wizard installed suggested plugins, continued with the built-in administrator, configured the local URL, and reached the Jenkins dashboard. No password value was saved or included in evidence. The Exercise 6 services and all pre-existing containers/volumes were preserved.
 
-The Exercise 6 delivery, Prometheus, and Grafana containers were running during inspection. They were left untouched. No new Jenkins container, volume, or account was created. See [`evidence/verification.txt`](evidence/verification.txt) and [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) for exact outcomes. Screenshots requiring an actual Jenkins instance are marked BLOCKED; none were fabricated.
+See [`evidence/verification.txt`](evidence/verification.txt) and [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) for the actual results and inspected screenshot inventory. Two requested captures remain missing: a terminal screenshot of the Docker mapping, and a screenshot of the short-lived “Jenkins is ready” page. Their facts are recorded in text or the following dashboard screenshot; no image substitutes were fabricated.
 
 ## Troubleshooting and cleanup
 
@@ -113,8 +113,20 @@ The Exercise 6 delivery, Prometheus, and Grafana containers were running during 
 - **Jenkins page does not open:** check `docker ps`, the published host port, and container logs (`docker logs <jenkins-container>`). Logs can contain sensitive configuration; redact them before sharing.
 - **Setup password is rejected:** ensure it is from the same Jenkins home volume and installation. Do not delete the volume or reset Jenkins as a workaround.
 - **Plugins are slow:** allow the installation to finish and inspect Jenkins logs locally. Avoid exposing the setup page or credentials publicly.
-- **Stop a demo you created:** `docker stop jenkins-exercise7` stops only that named container. Keep its volume if you may reuse the installation. Removing the container/volume is a separate data-affecting action and is intentionally not part of cleanup instructions here.
+- **Stop this exercise's Jenkins instance when you intentionally want it stopped:** `docker stop devops-exercise7-jenkins`. Its named volume `devops-exercise7-jenkins-home` holds configuration and should be preserved. Removing the container or volume is a separate data-affecting action.
+
+## Screenshots
+
+Screenshots below were captured from the local Jenkins instance and visually inspected. See the checklist for missing captures and their reasons.
+
+![Jenkins plugin setup](evidence/screenshots/02-jenkins-plugin-selection.png)
+
+![Jenkins plugin installation](evidence/screenshots/03-jenkins-plugin-progress.png)
+
+![Jenkins dashboard](evidence/screenshots/07-jenkins-dashboard.png)
+
+![Jenkins version](evidence/screenshots/08-jenkins-version.png)
 
 ## Conclusion
 
-CI gives developers fast, repeatable feedback on integrated changes. Jenkins provides a flexible automation server built from jobs, pipelines, plugins, and worker agents. In this inspection, Docker was healthy but Jenkins was unavailable, and port 8080 belonged to Minikube. The installation procedure and evidence checklist are ready for a later run when the existing Jenkins endpoint is available or a new instance is explicitly approved.
+CI gives developers fast, repeatable feedback on integrated changes. Jenkins provides a flexible automation server built from jobs, pipelines, plugins, and worker agents. This exercise's Jenkins 2.580.1 setup and dashboard were verified at `http://localhost:8081`; the existing Minikube forward on 8080 was not interrupted.

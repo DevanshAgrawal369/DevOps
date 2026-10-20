@@ -83,3 +83,7 @@ Both container names resolved successfully to IP addresses on `my-bridge-net`.
 - Saved API output, container status, and network inspection under `evidence/`.
 
 **Note:** The Flask API demonstrates the network setup and DNS resolution. It does not currently execute database queries against MySQL or cache operations against Redis.
+
+## Current evidence
+
+The running Flask API returned HTTP 200 from `/about` on 2026-10-20. Read-only inspection confirmed the Flask, Redis, and MySQL containers share `my-bridge-net`. See [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) and [the rendered API response](evidence/screenshots/01-api-live.png).

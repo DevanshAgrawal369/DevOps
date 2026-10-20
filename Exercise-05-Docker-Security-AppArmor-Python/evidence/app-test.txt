@@ -10,3 +10,4 @@ Connection: close
 
 Hello, this is a secure Flask application running inside a Docker container!
 User=app:app SecurityOpt=null Ports={"5000/tcp":[{"HostIp":"127.0.0.1","HostPort":"50079"}]}
+Live application screenshot verification, 2026-10-20: started a temporary container from the existing flask-apparmor image at loopback port 15005. `/` returned HTTP 200 with the expected response and was captured as evidence/screenshots/01-flask-app-unconfined.png. The temporary container was removed. This was an ordinary app smoke test; AppArmor enforcement remains unverified and blocked in Docker Desktop (effective profile previously observed as `kernel`).

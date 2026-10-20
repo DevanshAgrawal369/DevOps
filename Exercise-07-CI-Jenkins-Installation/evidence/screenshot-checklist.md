@@ -1,13 +1,18 @@
-# Screenshot checklist
+# Exercise 7 screenshot checklist
 
-No Jenkins screenshots were captured. The observed environment has no Jenkins container/process, `localhost:8081` is unavailable, and port 8080 is an existing Minikube port-forward returning HTTP 404. Capturing another page as Jenkins evidence would be misleading.
+Screenshots were captured from the local Jenkins container and Microsoft Edge via Playwright on 2026-10-20. Every existing image below was visually opened and checked for legibility and exposed credentials. The setup wizard is now complete.
 
-| Required filename | Purpose | Status | What to capture when Jenkins is available |
-|---|---|---|---|
-| `01-jenkins-container.png` | Running Jenkins container and published ports | BLOCKED | PowerShell terminal with `docker ps --filter "name=jenkins" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"`; ensure no secrets are visible. |
-| `02-jenkins-setup.png` | Genuine first-time setup/plugin stage | BLOCKED | Jenkins setup wizard only if that stage is actually active; otherwise do not create a substitute screenshot. |
-| `03-jenkins-dashboard.png` | Actual Jenkins dashboard | BLOCKED | Open the verified Jenkins URL after setup/login; show Jenkins UI and address bar, with no credentials visible. |
-| `04-jenkins-version.png` | Version from the actual installation | BLOCKED | Show Jenkins Manage Jenkins/System Information version page or actual running container version output. |
-| `05-jenkins-access-verification.png` | Successful HTTP access | BLOCKED | Show a successful response from the verified Jenkins URL (for example, `Invoke-WebRequest` status or Jenkins page). Do not use the unrelated 8080 HTTP 404. |
+| File | Purpose | Status |
+|---|---|---|
+| `screenshots/01-jenkins-unlock.png` | Initial unlock page; password input is blank | PASS — inspected |
+| `screenshots/02-jenkins-plugin-selection.png` | Suggested-plugin setup screen | PASS — inspected |
+| `screenshots/03-jenkins-plugin-progress.png` | Plugin installation progress | PASS — inspected |
+| `screenshots/04-jenkins-admin-setup-choice.png` | First-admin choice; blank credential fields and continue-as-admin option | PASS — inspected |
+| `screenshots/05-jenkins-instance-configuration.png` | Jenkins URL configured as `http://localhost:8081/` | PASS — inspected |
+| `screenshots/06-jenkins-ready.png` | Setup completion screen | MISSING — the wizard advanced before this screen was captured |
+| `screenshots/07-jenkins-dashboard.png` | Actual Jenkins dashboard | PASS — inspected |
+| `screenshots/08-jenkins-version.png` | Actual Jenkins version page | PASS — inspected; 2.580.1 |
+| `screenshots/01-jenkins-container.png` | Terminal showing container and local port mapping | MISSING — verified in text evidence, no terminal screenshot captured |
+| `screenshots/05-jenkins-access-verification.png` | Successful HTTP check | MISSING — HTTP 200 recorded in text evidence; no separate screenshot |
 
-Save genuine captures using the exact filenames in `evidence/screenshots/`, inspect each image for readability and secrets, then change the corresponding statuses here and record the actual verification in `verification.txt`.
+The Jenkins UI captures contain no administrator password. Port 8080 remains the existing Minikube port-forward; Jenkins is isolated on `127.0.0.1:8081`.

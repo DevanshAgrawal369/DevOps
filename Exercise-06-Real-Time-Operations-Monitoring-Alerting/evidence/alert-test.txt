@@ -192,3 +192,6 @@ Grafana /api/health: HTTP 200 version=12.1.1 database=ok
 Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
 Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
 final_stack_verify_exit=0
+
+Browser-verified controlled pending-alert test (2026-10-20; local time UTC+05:30):
+The existing simulator's reversible SIGUSR1 mode set pending_deliveries=12; SIGUSR2 restored normal operation. API snapshots: inactive at 2026-10-20T11:18:51.493Z; pending at 2026-10-20T11:18:59.012Z; firing at 2026-10-20T11:19:13.089Z; inactive again after restore (confirmed through Prometheus API). The alert expression is pending_deliveries > 10. Browser-rendered pages are screenshots 04 (baseline inactive), 07 (pending), 08 (firing), and 09 (resolved) under evidence/screenshots/. The delivery container remained running and healthy. HighAverageDeliveryTime was not tested in this run.

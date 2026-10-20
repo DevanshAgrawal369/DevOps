@@ -82,3 +82,7 @@ minikube stop
 - Exposed the application using a NodePort Service.
 - Verified application status and logs.
 - Prepared deployment files and evidence for GitHub.
+
+## Current evidence
+
+The running Flask Deployment and Service were rechecked on 2026-10-20. A temporary port-forward returned the expected body with HTTP 200. See [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) and [the live capture](evidence/screenshots/01-flask-live.png).

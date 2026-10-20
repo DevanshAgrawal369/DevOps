@@ -58,3 +58,7 @@ Test the endpoints at `http://127.0.0.1:8080/`, `/buy?user=123`, and `/health`.
 - Tested the application through a Kubernetes Service.
 
 Note: Multiple replicas demonstrate replication and recovery; this exercise does not benchmark flash-sale traffic capacity.
+
+## Current evidence
+
+On 2026-10-20, the Service returned its Big Sale response with the serving Pod hostname and all five ReplicaSet Pods were Ready. See [`evidence/screenshot-checklist.md`](evidence/screenshot-checklist.md) and [the live capture](evidence/screenshots/01-flashsale-live.png). The pre-existing port-forward on 8080 was not interrupted.
