@@ -1,0 +1,19 @@
+Environment checks captured on 2026-10-20 using Windows PowerShell:
+OS: Windows 10 Home Single Language, build 26200.
+Shell: Windows PowerShell (host reports PowerShell version information via $PSVersionTable.PSVersion).
+Docker context: desktop-linux.
+Docker CLI/server: 29.5.2; server is Docker Desktop 4.76.0, Linux/amd64.
+Daemon kernel: 6.6.87.2-microsoft-standard-WSL2. This is Docker Desktop's Linux VM, not the Windows host.
+Docker runtime feature metadata: apparmor.enabled=true. Docker info SecurityOptions listed seccomp builtin and cgroupns; AppArmor was not listed as a daemon security option.
+Windows apparmor_parser: unavailable.
+Read-only probe: docker run --rm --pull=always alpine:3.22 sh -c 'uname -r; test -r /sys/kernel/security/apparmor/profiles; command -v apparmor_parser; cat /proc/self/attr/current'. Output reported kernel 6.6.87.2-microsoft-standard-WSL2; AppArmor profiles interface unavailable; parser unavailable; current label output was `kernel`.
+Profile load/verification: not possible from this session. No attempt was made to modify Docker Desktop VM internals or load a policy from Windows.
+SDK attempted apparmor:my-apparmor-profile and Docker inspect retained that requested option, but PID 1 effective label was `kernel`. This does not prove the custom profile loaded or enforced.
+Windows PowerShell $PSVersionTable.PSVersion:
+5.1.26100.9444
+Windows OS:
+Windows 10 Home Single Language
+Docker client/server details:
+Client 29.5.2 / server 29.5.2 (linux/amd64)
+Image inspection: /bin/bash exists in flask-apparmor; the restricted action was not executed because the requested profile could not be verified.
+Image command check: /bin/bash is present and resolves to /usr/bin/bash. The profile denies execution through both paths; restricted-action execution was blocked because the custom profile was not verified.

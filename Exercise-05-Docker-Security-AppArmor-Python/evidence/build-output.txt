@@ -1,0 +1,88 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 408B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 133B 0.0s done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 355B 0.0s done
+#5 DONE 0.0s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY requirements.txt .
+#7 DONE 0.0s
+
+#8 [4/5] RUN pip install --no-cache-dir --requirement requirements.txt     && groupadd --system app && useradd --system --gid app --home-dir /app app
+#8 1.350 Collecting Flask==3.1.2 (from -r requirements.txt (line 1))
+#8 1.586   Downloading flask-3.1.2-py3-none-any.whl.metadata (3.2 kB)
+#8 1.632 Collecting Docker==7.1.0 (from -r requirements.txt (line 2))
+#8 1.669   Downloading docker-7.1.0-py3-none-any.whl.metadata (3.8 kB)
+#8 1.708 Collecting blinker>=1.9.0 (from Flask==3.1.2->-r requirements.txt (line 1))
+#8 1.735   Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+#8 1.794 Collecting click>=8.1.3 (from Flask==3.1.2->-r requirements.txt (line 1))
+#8 1.819   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#8 1.867 Collecting itsdangerous>=2.2.0 (from Flask==3.1.2->-r requirements.txt (line 1))
+#8 1.911   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+#8 1.964 Collecting jinja2>=3.1.2 (from Flask==3.1.2->-r requirements.txt (line 1))
+#8 1.988   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+#8 2.082 Collecting markupsafe>=2.1.1 (from Flask==3.1.2->-r requirements.txt (line 1))
+#8 2.122   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#8 2.174 Collecting werkzeug>=3.1.0 (from Flask==3.1.2->-r requirements.txt (line 1))
+#8 2.201   Downloading werkzeug-3.1.9-py3-none-any.whl.metadata (4.1 kB)
+#8 2.268 Collecting requests>=2.26.0 (from Docker==7.1.0->-r requirements.txt (line 2))
+#8 2.304   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+#8 2.367 Collecting urllib3>=1.26.0 (from Docker==7.1.0->-r requirements.txt (line 2))
+#8 2.392   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+#8 2.582 Collecting charset_normalizer<4,>=2 (from requests>=2.26.0->Docker==7.1.0->-r requirements.txt (line 2))
+#8 2.609   Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+#8 2.681 Collecting idna<4,>=2.5 (from requests>=2.26.0->Docker==7.1.0->-r requirements.txt (line 2))
+#8 2.705   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#8 2.745 Collecting certifi>=2023.5.7 (from requests>=2.26.0->Docker==7.1.0->-r requirements.txt (line 2))
+#8 2.771   Downloading certifi-2026.10.19-py3-none-any.whl.metadata (2.5 kB)
+#8 2.798 Downloading flask-3.1.2-py3-none-any.whl (103 kB)
+#8 2.862 Downloading docker-7.1.0-py3-none-any.whl (147 kB)
+#8 2.923 Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+#8 2.958 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#8 3.047 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#8 3.077 Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+#8 3.125 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#8 3.157 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+#8 3.188 Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+#8 3.243 Downloading werkzeug-3.1.9-py3-none-any.whl (228 kB)
+#8 3.315 Downloading certifi-2026.10.19-py3-none-any.whl (136 kB)
+#8 3.371 Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (257 kB)
+#8 3.441 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#8 3.480 Installing collected packages: urllib3, markupsafe, itsdangerous, idna, click, charset_normalizer, certifi, blinker, werkzeug, requests, jinja2, Flask, Docker
+#8 4.024 Successfully installed Docker-7.1.0 Flask-3.1.2 blinker-1.9.0 certifi-2026.10.19 charset_normalizer-3.5.2 click-8.5.0 idna-3.20 itsdangerous-2.2.0 jinja2-3.1.6 markupsafe-3.0.4 requests-2.34.2 urllib3-2.8.0 werkzeug-3.1.9
+#8 4.024 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#8 4.186
+#8 4.186 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#8 4.186 [notice] To update, run: pip install --upgrade pip
+#8 DONE 4.3s
+
+#9 [5/5] COPY --chown=app:app app.py .
+#9 DONE 0.0s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.3s done
+#10 exporting manifest sha256:ed8e48398a90224c9f78b693f471b9c2213e6e7e3d66439d1a604fda30925d09 0.0s done
+#10 exporting config sha256:37d29454c904a7ed614a5d5ea211d84a2ea43cce879af0981040a7eefdc4b9cd 0.0s done
+#10 exporting attestation manifest sha256:075f0f64693679c27bcbeb919b0caf3edec09fb2a76c7131f600213b23a2baae 0.0s done
+#10 exporting manifest list sha256:515058d80394201c15692c75c394b0173948a11017e6ede856ee5b4907c0a247 0.0s done
+#10 naming to docker.io/library/flask-apparmor:latest done
+#10 unpacking to docker.io/library/flask-apparmor:latest 0.1s done
+#10 DONE 0.6s

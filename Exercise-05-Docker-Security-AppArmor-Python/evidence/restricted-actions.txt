@@ -1,0 +1,8 @@
+Building missing image flask-apparmor
+Requested SecurityOpt: ['apparmor:my-apparmor-profile']
+PID 1 effective profile: kernel
+BLOCKED: /etc/passwd read - intended profile not proven active
+BLOCKED: /bin/bash execution - intended profile not proven active
+BLOCKED: Flask endpoint - intended profile not proven active
+Removed script-created container exercise5-restricted-actions
+exit_code=2

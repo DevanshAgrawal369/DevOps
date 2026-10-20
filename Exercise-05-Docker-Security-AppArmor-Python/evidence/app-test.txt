@@ -1,0 +1,12 @@
+Command: docker run --rm -d --name exercise5-http-check -p 127.0.0.1::5000 flask-apparmor
+Container ID: 51fd454cff96c1453b054deca9376a36989ca1cb517524ebdc89ce8adb0c8f9b
+Port: 127.0.0.1:50079
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.9 Python/3.12.12
+Date: Tue, 20 Oct 2026 10:11:16 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 76
+Connection: close
+
+Hello, this is a secure Flask application running inside a Docker container!
+User=app:app SecurityOpt=null Ports={"5000/tcp":[{"HostIp":"127.0.0.1","HostPort":"50079"}]}

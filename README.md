@@ -50,7 +50,7 @@ DevOps/
 
 ├── Exercise-04-Docker-Networking/
 
-├── Exercise-05-Jenkins-CI-CD/
+├── Exercise-05-Docker-Security-AppArmor-Python/
 
 ├── Exercise-06-Docker-Commands/
 

@@ -1,0 +1,42 @@
+# AppArmor policy for the Python 3.12 executable used by this image.
+# Load this file in the Linux kernel environment hosting the Docker daemon.
+profile my-apparmor-profile /usr/local/bin/python3.12 flags=(attach_disconnected,mediate_deleted) {
+  # Standard foundational rules for dynamically linked programs.
+  #include <abstractions/base>
+
+  # Flask/Python runtime, installed packages, application, and certificates.
+  /usr/local/bin/python3.12 mr,
+  /usr/local/bin/python3.12 r,
+  /usr/local/lib/python3.12/** mr,
+  /usr/local/lib/python3.12/** r,
+  /usr/local/lib/python3.12/site-packages/** mr,
+  /usr/local/lib/python3.12/site-packages/** r,
+  /app/** r,
+  /etc/ssl/certs/** r,
+  /etc/ssl/private/** r,
+  /etc/hosts r,
+  /etc/resolv.conf r,
+  /etc/hostname r,
+  /dev/null rw,
+  /dev/urandom r,
+  /dev/random r,
+  /proc/** r,
+  /sys/** r,
+  /tmp/** rw,
+
+  network inet stream,
+  network inet6 stream,
+
+  # Explicitly selected restrictions. /etc/passwd is container-local; this
+  # does not mediate access to the Docker host's files.
+  deny /etc/passwd r,
+  deny /etc/shadow r,
+  deny /root/** rwklx,
+  deny /sys/** w,
+  deny /bin/bash x,
+  deny /usr/bin/bash x,
+  deny capability sys_admin,
+  deny capability sys_module,
+
+  # No arbitrary executable transitions are granted by this profile.
+}
