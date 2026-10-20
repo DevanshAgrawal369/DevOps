@@ -1,0 +1,194 @@
+Exercise 6 controlled alert test; local start time: 2026-10-20T16:02:08.8295957+05:30
+Command: docker compose kill --signal SIGUSR1 delivery_service
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killing
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killed
+enable_pending_signal_exit=0
+2026-10-20T10:32:09.247613+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 11
+PromQL pending_deliveries => 1
+PromQL on_the_way_deliveries => 2
+PromQL average_delivery_time_count => 11
+PromQL average_delivery_time_sum => 172.6269372249243
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 15.693357929538571
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+pending_metric_verify_exit=0
+2026-10-20T10:32:09.618423+00:00 HighPendingDeliveries state=inactive count=0
+2026-10-20T10:32:14.632957+00:00 HighPendingDeliveries state=inactive count=0
+2026-10-20T10:32:19.636924+00:00 HighPendingDeliveries state=pending count=1
+2026-10-20T10:32:24.660568+00:00 HighPendingDeliveries state=pending count=1
+2026-10-20T10:32:29.685879+00:00 HighPendingDeliveries state=pending count=1
+2026-10-20T10:32:34.698032+00:00 HighPendingDeliveries state=firing count=1
+PASS: Prometheus API confirms HighPendingDeliveries is firing
+pending_firing_wait_exit=0
+Disable pending test and restore normal arrivals: 2026-10-20T16:02:39.9764866+05:30
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killing
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killed
+disable_pending_signal_exit=0
+2026-10-20T10:32:40.490311+00:00 HighPendingDeliveries state=firing count=1
+2026-10-20T10:32:45.517036+00:00 HighPendingDeliveries state=firing count=1
+2026-10-20T10:32:50.519842+00:00 HighPendingDeliveries state=inactive count=0
+PASS: HighPendingDeliveries is inactive after restoring normal simulator state
+pending_inactive_wait_exit=0
+Enable high-average test (100 synthetic 45-second Summary observations): 2026-10-20T16:02:50.5392572+05:30
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killing
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killed
+enable_average_signal_exit=0
+2026-10-20T10:32:50.954519+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 14
+PromQL pending_deliveries => 5
+PromQL on_the_way_deliveries => 1
+PromQL average_delivery_time_count => 14
+PromQL average_delivery_time_sum => 215.593573275367
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 15.3995409482405
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+high_average_metric_verify_exit=0
+2026-10-20T10:32:51.325883+00:00 HighAverageDeliveryTime state=inactive count=0
+2026-10-20T10:32:56.337532+00:00 HighAverageDeliveryTime state=inactive count=0
+2026-10-20T10:33:01.341008+00:00 HighAverageDeliveryTime state=pending count=1
+2026-10-20T10:33:06.345388+00:00 HighAverageDeliveryTime state=pending count=1
+2026-10-20T10:33:11.372733+00:00 HighAverageDeliveryTime state=pending count=1
+2026-10-20T10:33:16.399311+00:00 HighAverageDeliveryTime state=firing count=1
+PASS: Prometheus API confirms HighAverageDeliveryTime is firing
+average_firing_wait_exit=0
+Restore normal mode and clear synthetic Summary samples by restarting only delivery_service: 2026-10-20T16:03:22.6539699+05:30
+restart_exit=0
+2026-10-20T10:33:24.212155+00:00 HighAverageDeliveryTime state=firing count=1
+2026-10-20T10:33:29.229639+00:00 HighAverageDeliveryTime state=firing count=1
+2026-10-20T10:33:34.242669+00:00 HighAverageDeliveryTime state=inactive count=0
+PASS: HighAverageDeliveryTime is inactive after restoring normal simulator state
+average_inactive_wait_exit=0
+2026-10-20T10:33:34.540733+00:00 HighPendingDeliveries state=inactive count=0
+PASS: HighPendingDeliveries is inactive after restoring normal simulator state
+pending_inactive_wait_exit=0
+2026-10-20T10:33:34.774701+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 2
+PromQL pending_deliveries => 4
+PromQL on_the_way_deliveries => 3
+PromQL average_delivery_time_count => 2
+PromQL average_delivery_time_sum => 21.551604363893478
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 10.775802181946739
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+post_restore_stack_verify_exit=0
+Repeat with threshold query after scrape; start 2026-10-20T16:07:48.4751821+05:30
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killing
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killed
+repeat_pending_enable_exit=0
+2026-10-20T10:37:55.953712+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 17
+PromQL pending_deliveries => 12
+PromQL on_the_way_deliveries => 0
+PromQL average_delivery_time_count => 17
+PromQL average_delivery_time_sum => 244.61145315131157
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 14.388909008900681
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+repeat_pending_metric_query_exit=0
+2026-10-20T10:37:56.357552+00:00 HighPendingDeliveries state=inactive count=0
+2026-10-20T10:38:01.360683+00:00 HighPendingDeliveries state=pending count=1
+2026-10-20T10:38:06.376745+00:00 HighPendingDeliveries state=pending count=1
+2026-10-20T10:38:11.381877+00:00 HighPendingDeliveries state=pending count=1
+2026-10-20T10:38:16.404851+00:00 HighPendingDeliveries state=firing count=1
+PASS: Prometheus API confirms HighPendingDeliveries is firing
+repeat_pending_firing_exit=0
+Repeat: disable pending mode 2026-10-20T16:08:26.1756016+05:30
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killing
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killed
+repeat_pending_disable_exit=0
+2026-10-20T10:38:26.646917+00:00 HighPendingDeliveries state=firing count=1
+2026-10-20T10:38:31.650327+00:00 HighPendingDeliveries state=firing count=1
+2026-10-20T10:38:36.674130+00:00 HighPendingDeliveries state=firing count=1
+2026-10-20T10:38:41.677633+00:00 HighPendingDeliveries state=inactive count=0
+PASS: HighPendingDeliveries is inactive after restoring normal simulator state
+repeat_pending_inactive_exit=0
+Repeat: high-average signal 2026-10-20T16:08:41.6946543+05:30
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killing
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Killed
+repeat_average_enable_exit=0
+2026-10-20T10:38:49.145942+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 26
+PromQL pending_deliveries => 0
+PromQL on_the_way_deliveries => 0
+PromQL average_delivery_time_count => 126
+PromQL average_delivery_time_sum => 4854.417728563423
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 38.52712482986844
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+repeat_average_metric_query_exit=0
+2026-10-20T10:38:49.541907+00:00 HighAverageDeliveryTime state=inactive count=0
+2026-10-20T10:38:54.567351+00:00 HighAverageDeliveryTime state=pending count=1
+2026-10-20T10:38:59.588870+00:00 HighAverageDeliveryTime state=pending count=1
+2026-10-20T10:39:04.592043+00:00 HighAverageDeliveryTime state=pending count=1
+2026-10-20T10:39:09.607049+00:00 HighAverageDeliveryTime state=firing count=1
+PASS: Prometheus API confirms HighAverageDeliveryTime is firing
+repeat_average_firing_exit=0
+Restore normal simulator and clear synthetic Summary observations: 2026-10-20T16:09:16.7753101+05:30
+final_delivery_restart_exit=0
+2026-10-20T10:39:17.903777+00:00 HighAverageDeliveryTime state=firing count=1
+2026-10-20T10:39:22.921519+00:00 HighAverageDeliveryTime state=firing count=1
+2026-10-20T10:39:27.946560+00:00 HighAverageDeliveryTime state=inactive count=0
+PASS: HighAverageDeliveryTime is inactive after restoring normal simulator state
+final_average_inactive_exit=0
+2026-10-20T10:39:28.220850+00:00 HighPendingDeliveries state=inactive count=0
+PASS: HighPendingDeliveries is inactive after restoring normal simulator state
+final_pending_inactive_exit=0
+2026-10-20T10:39:28.466962+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 3
+PromQL pending_deliveries => 2
+PromQL on_the_way_deliveries => 1
+PromQL average_delivery_time_count => 3
+PromQL average_delivery_time_sum => 46.94628353789258
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 15.648761179297528
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+final_stack_verify_exit=0

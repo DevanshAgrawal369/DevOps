@@ -1,0 +1,9 @@
+Jenkins integration check (2026-10-20):
+Jenkins Windows service: not found
+Jenkins Docker container: not found
+java/javaw process: not found
+Port 8080 owner: kubectl.exe "C:\Program Files\Docker\Docker\resources\bin\kubectl.exe" port-forward service/flashsale-svc 8080:80
+Groovy compiler: unavailable
+Placeholder scan: PASS (handout placeholder absent)
+Static inspection: expected checkout, Python/dependency, syntax/config, unit-test, Docker-build, Compose-config, monitoring/rule, optional integration, and scoped-cleanup stages are present.
+Jenkins declarative linter and build: BLOCKED; no Jenkins controller/agent is available. Local equivalents are verified in metrics-test.txt and prometheus-targets.txt.

@@ -1,0 +1,18 @@
+2026-10-20T10:40:58.055046+00:00 GET /metrics HTTP 200
+PASS metrics names: total_deliveries, pending_deliveries, on_the_way_deliveries, average_delivery_time_count, average_delivery_time_sum
+Prometheus /-/healthy: HTTP 200
+Prometheus /-/ready: HTTP 200
+target job=delivery_service scrapeUrl=http://delivery_service:8000/metrics health=up lastError=''
+target job=prometheus scrapeUrl=http://prometheus:9090/metrics health=up lastError=''
+PromQL total_deliveries => 33
+PromQL pending_deliveries => 0
+PromQL on_the_way_deliveries => 3
+PromQL average_delivery_time_count => 33
+PromQL average_delivery_time_sum => 492.03697047579647
+PromQL average_delivery_time_sum / clamp_min(average_delivery_time_count, 1) => 14.910211226539287
+rule HighPendingDeliveries health=ok state=inactive query=pending_deliveries > 10
+rule HighAverageDeliveryTime health=ok state=inactive query=average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+Grafana /api/health: HTTP 200 version=12.1.1 database=ok
+Grafana datasource UID=prometheus name=Prometheus type=prometheus url=http://prometheus:9090 HTTP 200
+Grafana provisioned dashboard matches=1 title=ZAPPTTO Delivery Operations Monitoring uid=zapptto-delivery-ops HTTP 200
+stack_verify_exit=0

@@ -1,0 +1,60 @@
+ Image exercise6-delivery-metrics:local Building
+#1 [internal] load local bake definitions
+#1 reading from stdin 702B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 588B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 131B 0.0s done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 5.95kB 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY requirements.txt .
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt     && groupadd --system app && useradd --system --gid app --home-dir /app app
+#9 CACHED
+
+#10 [5/5] COPY --chown=app:app delivery_metrics.py .
+#10 DONE 0.0s
+
+#11 exporting to image
+#11 exporting layers 0.0s done
+#11 exporting manifest sha256:8ea825f475006ee5ea2a2c87087c9eebd6c68e1373138dd9a3cc18b4b10835bd 0.0s done
+#11 exporting config sha256:83c1a686fa306a1a8e6bcdc08833badf35a3608f2cac754b672c39f3771c5246 0.0s done
+#11 exporting attestation manifest sha256:89dddb58ec4283125082227a040e182a2cd59549ba2d33e14cdc7c8bd8d1a890 0.0s done
+#11 exporting manifest list sha256:3f70d42293be6aea14b6fcc9e947f47816f4f551f1b00bcd801c63efdedb434b done
+#11 naming to docker.io/library/exercise6-delivery-metrics:local done
+#11 unpacking to docker.io/library/exercise6-delivery-metrics:local 0.0s done
+#11 DONE 0.2s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image exercise6-delivery-metrics:local Built
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Recreate
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Recreated
+ Container exercise-06-real-time-operations-monitoring-alerting-prometheus-1 Running
+ Container exercise-06-real-time-operations-monitoring-alerting-grafana-1 Running
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Starting
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Started
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Waiting
+ Container exercise-06-real-time-operations-monitoring-alerting-delivery_service-1 Healthy
+ Container exercise-06-real-time-operations-monitoring-alerting-prometheus-1 Waiting
+ Container exercise-06-real-time-operations-monitoring-alerting-prometheus-1 Healthy
+compose_up_exit=0

@@ -1,0 +1,9 @@
+.git
+.env
+.env.*
+!.env.example
+evidence/
+__pycache__/
+*.py[cod]
+.venv/
+.exercise6-venv-*

@@ -52,7 +52,7 @@ DevOps/
 
 ├── Exercise-05-Docker-Security-AppArmor-Python/
 
-├── Exercise-06-Docker-Commands/
+├── Exercise-06-Real-Time-Operations-Monitoring-Alerting/
 
 ├── Exercise-07-Containerized-Application/
 

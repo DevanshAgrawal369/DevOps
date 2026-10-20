@@ -1,0 +1,21 @@
+groups:
+  - name: delivery-alerts
+    interval: 5s
+    rules:
+      - alert: HighPendingDeliveries
+        expr: pending_deliveries > 10
+        for: 15s
+        labels:
+          severity: warning
+        annotations:
+          summary: High pending deliveries
+          description: Pending deliveries have remained above the configured threshold.
+
+      - alert: HighAverageDeliveryTime
+        expr: average_delivery_time_count > 0 and (average_delivery_time_sum / average_delivery_time_count) > 30
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: High average delivery time
+          description: Average delivery time has exceeded 30 seconds.

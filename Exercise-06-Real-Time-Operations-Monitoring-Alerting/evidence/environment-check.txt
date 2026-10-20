@@ -1,0 +1,10 @@
+Exercise 6 environment survey (2026-10-20, Windows PowerShell):
+Repository: C:\Users\devan\DevOps, branch main; last existing commit before Exercise 6 was bf871ce and branch matched origin/main.
+Host Python: Python 3.14.4 via py launcher.
+Docker CLI/server: 29.5.2; Docker Desktop 4.76.0 Linux engine; context desktop-linux.
+Docker Compose: v5.1.4.
+Before startup, monitoring ports 3000, 8000, and 9090 had no Windows listener. Port 8080 was already listened to by kubectl.exe port-forward service/flashsale-svc; left untouched.
+Jenkins survey: no Windows Jenkins service, Jenkins process, or Jenkins container found. No Jenkins job/server was modified or started.
+Existing Docker inventory observed and preserved: flask, redis, mysql, minikube, smart-hms-postgres-1, smart-hms-redis-1. No existing containers or volumes were removed or modified.
+For local Grafana, a random local-only password was written to this exercise's ignored .env file. The password was not printed or recorded in evidence.
+After startup, this exercise uses loopback host bindings 127.0.0.1:8000, :9090, and :3000 and its own Compose network and named volumes.

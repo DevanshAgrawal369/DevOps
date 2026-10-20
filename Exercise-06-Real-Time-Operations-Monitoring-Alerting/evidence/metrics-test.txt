@@ -1,0 +1,16 @@
+test_alert_test_mode_is_explicit_and_reversible (test_delivery_metrics.DeliveryMetricsTests.test_alert_test_mode_is_explicit_and_reversible) ... Controlled alert-test mode enabled: pending deliveries fixed at 12
+ok
+test_configuration_is_valid_and_has_required_alert_thresholds (test_delivery_metrics.DeliveryMetricsTests.test_configuration_is_valid_and_has_required_alert_thresholds) ... ok
+test_high_average_alert_mode_uses_explicit_synthetic_samples (test_delivery_metrics.DeliveryMetricsTests.test_high_average_alert_mode_uses_explicit_synthetic_samples) ... Controlled high-average alert test added 100 synthetic 45-second samples
+ok
+test_initialization_and_simulation_keep_delivery_counts_valid (test_delivery_metrics.DeliveryMetricsTests.test_initialization_and_simulation_keep_delivery_counts_valid) ... ok
+test_metrics_initialize_and_export_expected_names (test_delivery_metrics.DeliveryMetricsTests.test_metrics_initialize_and_export_expected_names) ... ok
+test_summary_average_calculation_and_zero_count_guard (test_delivery_metrics.DeliveryMetricsTests.test_summary_average_calculation_and_zero_count_guard) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+OK
+unit_test_exit=0
+PASS: Prometheus targets/rules references, alert expressions, Compose service declarations and Grafana JSON/provisioning structure
+docker_compose_config_exit=0

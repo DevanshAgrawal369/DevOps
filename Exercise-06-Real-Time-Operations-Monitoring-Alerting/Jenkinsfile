@@ -1,0 +1,154 @@
+pipeline {
+    agent any
+    options { timestamps(); disableConcurrentBuilds() }
+    parameters {
+        booleanParam(name: 'RUN_DOCKER_STAGES', defaultValue: true, description: 'Build/validate using a Docker daemon already approved for this agent')
+        booleanParam(name: 'RUN_STACK_INTEGRATION', defaultValue: false, description: 'Start an isolated stack; needs Docker access, free local ports, and Jenkins credential exercise6-grafana-admin-password')
+    }
+    environment {
+        PYTHONDONTWRITEBYTECODE = '1'
+        GRAFANA_ADMIN_USER = 'ci-validation'
+        IMAGE_TAG = "ci-${BUILD_NUMBER}"
+        VENV_DIR = ".exercise6-venv-${BUILD_NUMBER}"
+        COMPOSE_PROJECT_NAME = "exercise6-ci-${BUILD_NUMBER}"
+        STACK_MARKER = ".exercise6-stack-started-${BUILD_NUMBER}"
+        IMAGE_MARKER = ".exercise6-image-built-${BUILD_NUMBER}"
+    }
+    stages {
+        stage('Checkout and workspace validation') {
+            steps {
+                checkout scm
+                sh '''
+                    test -f delivery_metrics.py
+                    test -f prometheus.yml
+                    test -f alert_rules.yml
+                    test -f grafana/dashboards/delivery-monitoring.json
+                    echo "Workspace validated: $WORKSPACE"
+                '''
+            }
+        }
+        stage('Python and dependency checks') {
+            steps {
+                sh '''
+                    python3 --version
+                    python3 -m venv "$VENV_DIR"
+                    . "$VENV_DIR/bin/activate"
+                    python -m pip install --upgrade pip
+                    python -m pip install -r requirements.txt
+                '''
+            }
+        }
+        stage('Syntax and configuration validation') {
+            steps {
+                sh '''
+                    . "$VENV_DIR/bin/activate"
+                    python -m compileall -q delivery_metrics.py config_validation.py test_delivery_metrics.py
+                    python config_validation.py
+                '''
+            }
+        }
+        stage('Unit tests') {
+            steps {
+                sh '''
+                    . "$VENV_DIR/bin/activate"
+                    python -m unittest -v test_delivery_metrics
+                '''
+            }
+        }
+        stage('Docker image build') {
+            when { expression { params.RUN_DOCKER_STAGES } }
+            steps {
+                sh '''
+                    if ! docker info >/dev/null 2>&1; then
+                      echo "SKIPPED: this Jenkins agent has no configured Docker daemon. No socket mount or privileged mode is assumed."
+                    elif docker image inspect "exercise6-delivery-metrics:$IMAGE_TAG" >/dev/null 2>&1; then
+                      echo "SKIPPED: image tag already exists; preserving it."
+                    else
+                      docker build -t "exercise6-delivery-metrics:$IMAGE_TAG" .
+                      touch "$IMAGE_MARKER"
+                    fi
+                '''
+            }
+        }
+        stage('Docker Compose validation') {
+            when { expression { params.RUN_DOCKER_STAGES } }
+            steps {
+                script {
+                    withEnv(['GRAFANA_ADMIN_PASSWORD=configuration-only-not-a-secret']) {
+                        sh '''
+                            if docker compose version >/dev/null 2>&1; then
+                              docker compose config --quiet
+                            else
+                              echo "SKIPPED: Docker Compose plugin is unavailable on this agent."
+                            fi
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Monitoring and alert-rule validation') {
+            steps {
+                sh '''
+                    . "$VENV_DIR/bin/activate"
+                    python config_validation.py
+                    if command -v promtool >/dev/null 2>&1; then
+                      promtool check config prometheus.yml
+                      promtool check rules alert_rules.yml
+                    elif [ "${RUN_DOCKER_STAGES}" = "true" ] && docker info >/dev/null 2>&1; then
+                      docker run --rm \\
+                        -v "$WORKSPACE/prometheus.yml:/etc/prometheus/prometheus.yml:ro" \\
+                        -v "$WORKSPACE/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro" \\
+                        prom/prometheus:v3.5.0 \\
+                        promtool check config /etc/prometheus/prometheus.yml
+                      docker run --rm \\
+                        -v "$WORKSPACE/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro" \\
+                        prom/prometheus:v3.5.0 \\
+                        promtool check rules /etc/prometheus/alert_rules.yml
+                    else
+                      echo "Promtool runtime validation skipped; structural checks passed."
+                    fi
+                '''
+            }
+        }
+        stage('Optional stack integration') {
+            when { expression { params.RUN_STACK_INTEGRATION && params.RUN_DOCKER_STAGES } }
+            steps {
+                withCredentials([string(credentialsId: 'exercise6-grafana-admin-password', variable: 'GRAFANA_ADMIN_PASSWORD')]) {
+                    sh '''
+                        touch "$STACK_MARKER"
+                        docker compose up -d --build
+                        trap 'docker compose down -v' EXIT
+                        python3 - <<'PY'
+import time, urllib.request
+for _ in range(30):
+    try:
+        with urllib.request.urlopen('http://127.0.0.1:9090/-/ready', timeout=2) as response:
+            print('Prometheus readiness HTTP', response.status)
+            break
+    except Exception:
+        time.sleep(2)
+else:
+    raise SystemExit('Prometheus did not become ready')
+PY
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            sh '''
+                if [ -f "$STACK_MARKER" ]; then
+                  docker compose down -v || true
+                  rm -f -- "$STACK_MARKER"
+                fi
+                if [ -f "$IMAGE_MARKER" ]; then
+                  docker image rm "exercise6-delivery-metrics:$IMAGE_TAG" || true
+                  rm -f -- "$IMAGE_MARKER"
+                fi
+                case "$VENV_DIR" in .exercise6-venv-*) rm -rf -- "$VENV_DIR" ;; esac
+                echo "Cleanup limited to this build's marked stack, image, and virtual environment."
+            '''
+        }
+    }
+}
