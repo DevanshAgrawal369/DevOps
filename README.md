@@ -28,7 +28,7 @@ A practical collection of DevOps lab exercises covering application development,
 
 9\. Jenkins Multi-Stage Pipeline for a Python Flask Application
 
-10\. Automated Testing Using Selenium
+10\. Multi-Node Kubernetes Cluster with Multiple Applications
 
 
 
@@ -60,7 +60,7 @@ DevOps/
 
 ├── Exercise-09-Jenkins-Multistage-Pipeline/
 
-└── Exercise-10-Selenium-Automation/
+└── Exercise-10-Kubernetes-MultiNode-MultiApp/
 
 ```
 
@@ -353,31 +353,13 @@ Directory: `Exercise-03-Flash-Sale-ReplicaSet/`
 \*\*Key learning outcomes:\*\* Declarative pipelines, build stages, automated testing, linting, workspace deployment, live HTTP verification, and safe process cleanup.
 
 
-\## Exercise 10: Automated Testing Using Selenium
+\## Exercise 10: Multi-Node Kubernetes Cluster with Multiple Applications
 
+\**Objective:** Deploy independent Product Catalog and Shopping Cart Flask applications to Kubernetes with 2 and 3 replicas. Required pod anti-affinity distributes each application's replicas across distinct nodes.
 
+\**Project:** [Exercise 10 README](Exercise-10-Kubernetes-MultiNode-MultiApp/README.md)
 
-\*\*Objective:\*\* Explore browser automation and test a web application using Selenium.
-
-
-
-\*\*Planned activities:\*\*
-
-\- Set up Selenium and a compatible browser driver.
-
-\- Create a simple JavaScript program or web page as required by the lab.
-
-\- Write automated browser tests.
-
-\- Verify expected application behavior.
-
-\- Record test results.
-
-
-
-\*\*Key learning outcomes:\*\* Browser automation, test cases, automated verification, and regression testing.
-
-
+\**Verification status:** Local unit tests, manifest checks, Docker builds, and Docker HTTP smoke tests passed. Remote three-node scheduling, Kubernetes service tests, self-healing, and screenshots remain pending; see the exercise evidence and remote execution guide.
 
 \## Technologies Used
 

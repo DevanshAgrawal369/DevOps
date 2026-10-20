@@ -1,0 +1,10 @@
+Exercise 10 local verification
+Timestamp: 2026-10-20T20:16:20.5286002+05:30
+Scope: isolated temporary Python virtual environment; local unit tests and YAML validation only. No Kubernetes context contacted.
+Command: .\scripts\verify-local.ps1
+Result: PASS (exit code 0)
+
+Catalog tests: 2 passed.
+Cart tests: 6 passed.
+Kubernetes manifest syntax: all 5 YAML documents parsed.
+Manifest assertions: 2/3 replicas, required hostname anti-affinity, and app-specific selectors passed.

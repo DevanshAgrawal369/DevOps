@@ -1,0 +1,39 @@
+Exercise 10 verification record
+Date: 2026-10-20T20:16:30.5461252+05:30 (Asia/Calcutta)
+
+REPOSITORY AND PRE-FLIGHT
+Main repository: C:\Users\devan\DevOps
+Branch: main
+At preparation start, Exercise 9 commit d2ddb683c32259fda1212bed6b2fe9da73dae683 was present locally and on origin/main. Exercise 9 files were not modified or staged.
+Existing Minikube profile: minikube; active context: minikube; one node Ready. Existing profile and workloads were inspected and left unchanged.
+Windows available memory at last recorded preflight: 3.86 GiB of 15.73 GiB. A second local cluster was not started.
+Docker Desktop server: 29.5.2, Linux engine, 24 CPUs exposed, memory limit 7.615 GiB. Existing containers/services were left unchanged.
+Killercoda standard playground page required JavaScript and the available browser surface was unavailable. No remote session was started; remote node count/capacity remains unobserved. Official creator docs describe 1-node and 2-node kubeadm templates but do not establish the standard playground's live topology.
+
+LOCAL APPLICATION AND MANIFEST CHECKS
+Isolated validation command: .\scripts\verify-local.ps1 (temporary venv, removed on exit).
+Catalog unit tests: 2 passed.
+Shopping Cart unit tests: 6 passed, including POST then GET state, fresh empty cart, health, and invalid input cases.
+Kubernetes YAML: all 5 documents parsed; expected replica counts (2/3), required hostname anti-affinity selectors, and app-specific labels checked. Bash syntax checks passed for verify-cluster.sh and test-endpoints.sh.
+See evidence/local-validation.txt for the captured test summary.
+
+LOCAL DOCKER BUILDS
+Both images built successfully on Docker Desktop; IDs and sizes:
+[product-catalog:exercise10] sha256:503bf0e047f58206782e3552695db46a1ce2ea1cd534d2d46072d5d554dd680d 47529505
+[shopping-cart:exercise10] sha256:48b36cef6faf5ded9ba4e2746b6fba44501e0210fc3fad6dc76d4fad02b3ab99 47529930
+See evidence/build-output.txt for the actual Docker build output.
+
+LOCAL DOCKER HTTP SMOKE TEST
+Both temporary containers became healthy and ran as UID/GID 10001:10001.
+Product Catalog: loopback HTTP 200 and exact three-product JSON; /health healthy.
+Shopping Cart: fresh GET returned an empty list; valid POST returned HTTP 201; subsequent GET returned the posted Laptop item; /health healthy.
+The temporary test containers were removed after checks. This was local Docker testing only, not Kubernetes Service/pod testing. See evidence/docker-smoke-test.txt.
+
+REMOTE KUBERNETES (NOT RUN)
+No remote context, node names/readiness/capacity, or 3 schedulable nodes were observed. No manifests were applied remotely. Deployment replica counts, pod placement, endpoints, HTTP requests against Kubernetes Services/pods, and self-healing tests: NOT RUN.
+Image distribution to remote nodes: NOT RUN; no registry image was published.
+
+SCREENSHOTS
+No screenshots captured or visually inspected. All 14 required remote screenshots are marked pending in evidence/screenshot-checklist.md.
+
+No kubeconfig, password, token, or secret was recorded. No local Minikube profile or pre-existing workload was modified.

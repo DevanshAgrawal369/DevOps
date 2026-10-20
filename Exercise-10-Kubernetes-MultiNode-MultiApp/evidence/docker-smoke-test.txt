@@ -1,0 +1,5 @@
+﻿Timestamp: 2026-10-20T20:12:33.3640586+05:30
+Scope: local Docker smoke containers only; no Kubernetes cluster used.
+Product Catalog HTTP 200, expected 3 products; user=10001:10001 health=healthy; response={"products":[{"id":1,"name":"Laptop","price":1200},{"id":2,"name":"Phone","price":800},{"id":3,"name":"Headphones","price":150}]}
+Shopping Cart fresh GET {"items":[]}; POST HTTP 201; subsequent GET {"items":[{"name":"Laptop","price":1200,"product_id":1,"quantity":1}]}; user=10001:10001 health=healthy
+PASS: both Docker image health checks and loopback HTTP smoke tests. These are not Kubernetes tests.

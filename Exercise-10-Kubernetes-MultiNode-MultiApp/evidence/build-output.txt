@@ -1,0 +1,92 @@
+Exercise 10 Docker image build verification
+Timestamp: 2026-10-20T20:16:20.5406032+05:30
+
+Command: docker build --progress=plain -f app-a-product-catalog\Dockerfile -t product-catalog:exercise10 app-a-product-catalog
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 743B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 104B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 63B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.0s
+
+#6 [3/5] COPY requirements.txt ./requirements.txt
+#6 CACHED
+
+#7 [4/5] RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt     && groupadd --gid 10001 app     && useradd --uid 10001 --gid 10001 --no-create-home --shell /usr/sbin/nologin app
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [5/5] COPY app.py ./app.py
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 exporting manifest sha256:78657f6d6f565abf067147be25235d63b0a66b7ddc1870d08aae2652b0c7723e done
+#10 exporting config sha256:973e5be0cebf066f2d312242439d350dbbf1e5ddc2c4f8efaf00572800d4ac96 done
+#10 exporting attestation manifest sha256:60c21c4133d57cd0dbd4ed3a6ee4e8037f4e34b4e932905d575a83eebbfe71c2 0.0s done
+#10 exporting manifest list sha256:503bf0e047f58206782e3552695db46a1ce2ea1cd534d2d46072d5d554dd680d 0.0s done
+#10 naming to docker.io/library/product-catalog:exercise10 done
+#10 unpacking to docker.io/library/product-catalog:exercise10 done
+#10 DONE 0.1s
+Exit code: 0
+
+Command: docker build --progress=plain -f app-b-shopping-cart\Dockerfile -t shopping-cart:exercise10 app-b-shopping-cart
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 743B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 104B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 63B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.0s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY requirements.txt ./requirements.txt
+#7 CACHED
+
+#8 [4/5] RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt     && groupadd --gid 10001 app     && useradd --uid 10001 --gid 10001 --no-create-home --shell /usr/sbin/nologin app
+#8 CACHED
+
+#9 [5/5] COPY app.py ./app.py
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 exporting manifest sha256:37f3cfbbccceb1d7679509a1f76ab47234cfc4092f31dc209b3376ef34805e94 done
+#10 exporting config sha256:12e6eca7b8d9430c2cd1173bb3f44e2c21b7c96875f99eb9de62dbbbd2ce5d1c done
+#10 exporting attestation manifest sha256:88ada3dd31f8ecc605155c4a429d46521dc60ab878f394295938409c5d020a4a 0.0s done
+#10 exporting manifest list sha256:48b36cef6faf5ded9ba4e2746b6fba44501e0210fc3fad6dc76d4fad02b3ab99 done
+#10 naming to docker.io/library/shopping-cart:exercise10 done
+#10 unpacking to docker.io/library/shopping-cart:exercise10 done
+#10 DONE 0.0s
+Exit code: 0
