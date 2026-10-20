@@ -1,0 +1,5 @@
+﻿NAMES      IMAGE                                 STATUS              PORTS
+flask      flask-api                             Up About a minute   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp
+redis      redis:latest                          Up 2 minutes        6379/tcp
+mysql      mysql:latest                          Up 3 minutes        3306/tcp, 33060/tcp
+minikube   gcr.io/k8s-minikube/kicbase:v0.0.51   Up 46 hours         127.0.0.1:59968->22/tcp, 127.0.0.1:59966->2376/tcp, 127.0.0.1:59969->5000/tcp, 127.0.0.1:59965->8443/tcp, 127.0.0.1:59967->32443/tcp

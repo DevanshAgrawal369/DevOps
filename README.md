@@ -48,7 +48,7 @@ DevOps/
 
 ├── Exercise-03-Flash-Sale-ReplicaSet/
 
-├── Exercise-04-Jenkins-Setup/
+├── Exercise-04-Docker-Networking/
 
 ├── Exercise-05-Jenkins-CI-CD/
 
