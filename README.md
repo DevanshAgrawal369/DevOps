@@ -24,7 +24,7 @@ A practical collection of DevOps lab exercises covering application development,
 
 7\. Develop and Containerize a Web Application
 
-8\. Integrate Docker and Kubernetes
+8\. Creating a Hello World Jenkins Job
 
 9\. Deploy and Manage an Application Using Kubernetes
 
@@ -56,7 +56,7 @@ DevOps/
 
 ├── Exercise-07-CI-Jenkins-Installation/
 
-├── Exercise-08-Docker-Kubernetes-Integration/
+├── Exercise-08-Jenkins-Hello-World/
 
 ├── Exercise-09-Kubernetes-Deployment/
 
@@ -304,29 +304,29 @@ Directory: `Exercise-03-Flash-Sale-ReplicaSet/`
 
 
 
-\## Exercise 8: Integrate Docker and Kubernetes
+\## Exercise 8: Creating a Hello World Jenkins Job
 
 
 
-\*\*Objective:\*\* Use Docker images as the basis for running applications in Kubernetes.
+\*\*Objective:\*\* Publish a Bash script to GitHub and run it from a Jenkins Freestyle job.
 
 
 
-\*\*Planned activities:\*\*
+\*\*Tasks completed:\*\*
 
-\- Build an application image.
+\- Created and pushed `hello-world.sh` to the public `devops-sample-code` repository.
 
-\- Make the image available to Kubernetes.
+\- Configured the Jenkins `HelloWorld` Freestyle job to clone `main`.
 
-\- Define Kubernetes resources using YAML.
+\- Executed `sh hello-world.sh` in Jenkins build #1.
 
-\- Deploy the application.
+\- Verified `Hello, Jenkins!` and `Finished: SUCCESS` in Console Output.
 
-\- Inspect Pods, Services, and logs.
+\- Saved genuine GitHub and Jenkins screenshots in the exercise evidence folder.
 
 
 
-\*\*Key learning outcomes:\*\* Container orchestration, image distribution, Kubernetes manifests, and application deployment.
+\*\*Key learning outcomes:\*\* Git-based source checkout, Jenkins Freestyle jobs, shell build steps, and console verification.
 
 
 

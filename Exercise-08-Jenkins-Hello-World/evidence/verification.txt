@@ -1,0 +1,33 @@
+Exercise 8 verification — 2026-10-20
+
+Environment:
+- Main repository: C:\Users\devan\DevOps (initially clean at af9bacc).
+- Jenkins URL: http://localhost:8081
+- Jenkins container: devops-exercise7-jenkins, image jenkins/jenkins:lts-jdk21, version 2.580.1.
+- Persistent volume: devops-exercise7-jenkins-home mounted at /var/jenkins_home; preserved.
+- Port 8080: existing Minikube kubectl port-forward; not modified.
+- Jenkins Git plugin: present at /var/jenkins_home/plugins/git.jpi.
+- Linux shell and Git: /usr/bin/sh and /usr/bin/git present in the build container.
+- Jenkins login endpoint: HTTP 200. Authentication secret was not saved here.
+
+Sample repository:
+- Public URL: https://github.com/DevanshAgrawal369/devops-sample-code
+- Git remote: https://github.com/DevanshAgrawal369/devops-sample-code.git
+- Branch: main
+- Script: hello-world.sh (2 lines; Bash shebang and `echo "Hello, Jenkins!"`).
+- Separate repository commit: 68b5a94 Add Jenkins hello world script; pushed successfully.
+- GitHub API confirmed repository visibility public, default branch main, and remote path hello-world.sh.
+
+Jenkins job:
+- Name: HelloWorld
+- Description: Hello World! Jenkins job.
+- SCM: Git, public sample repository URL above, branch specifier */main.
+- Credentials: none.
+- Build step: Execute shell, `sh hello-world.sh`.
+- Build number: #1
+- Build result: SUCCESS
+- Checked-out commit: 68b5a94a2ba2545d66496eb83d629eb0a64504a9 (`refs/remotes/origin/main`).
+- Actual console output included `+ sh hello-world.sh`, `Hello, Jenkins!`, and `Finished: SUCCESS`.
+- Dashboard shows HelloWorld with build #1 as last success.
+
+All six screenshots listed in screenshot-checklist.md were captured from actual GitHub/Jenkins rendered pages and visually inspected. No passwords, tokens, or credential values were saved. The separate sample-repository worktree is under the user temp directory, outside the main repository.
